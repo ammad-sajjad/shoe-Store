@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:shoe_store/home.dart';
 import 'package:shoe_store/pages/shopPage.dart';
 
-class introPage extends StatelessWidget {
+class introPage extends StatefulWidget {
   const introPage({super.key});
 
+  @override
+  State<introPage> createState() => _introPageState();
+}
+
+class _introPageState extends State<introPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

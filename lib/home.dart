@@ -17,6 +17,7 @@ class _homeState extends State<home> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
+        backgroundColor: Colors.grey[300],
         leading: Builder(
           builder: (context) {
             return IconButton(
