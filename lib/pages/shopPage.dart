@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoe_store/components/navBar.dart';
 import 'package:shoe_store/components/shoeTile.dart';
 import 'package:shoe_store/intro.dart';
 import 'package:shoe_store/models/shoe.dart';

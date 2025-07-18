@@ -10,6 +10,8 @@ class cart extends StatefulWidget {
 class _cartState extends State<cart> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Container(
+      child: Text("data"),
+    );
   }
 }

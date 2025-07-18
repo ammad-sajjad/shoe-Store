@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:shoe_store/components/navBar.dart';
 import 'package:shoe_store/pages/cartPage.dart';
 import 'package:shoe_store/pages/shopPage.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
 
+
+
   @override
   State<home> createState() => _homeState();
 }
-
 class _homeState extends State<home> {
-  final List<Widget> _pages = [const shop(), const cart()];
+
+  int _selectedIndex = 0;
+
+
+  void navigateBottomBar(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _pages = [
+    const shop(),
+    const cart()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      bottomNavigationBar: navBar(onTabChange: (index)=>navigateBottomBar(index)),
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.grey[300],
         leading: Builder(
@@ -86,7 +102,8 @@ class _homeState extends State<home> {
           ],
         ),
       ),
-      body: _pages.first,
+
+      body: _pages[_selectedIndex],
     );
   }
 }
