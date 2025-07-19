@@ -1,1 +1,1 @@
-Shoe Store
+Shoe-Store
