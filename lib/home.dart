@@ -6,8 +6,6 @@ import 'package:shoe_store/pages/shopPage.dart';
 class home extends StatefulWidget {
   const home({super.key});
 
-
-
   @override
   State<home> createState() => _homeState();
 }

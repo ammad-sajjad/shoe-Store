@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shoe_store/models/shoe.dart';
+
+import '../pages/cartPage.dart';
 
 class shoeTile extends StatelessWidget {
   shoe Shoe;
+  void Function()? onTap;
 
-  shoeTile({super.key, required this.Shoe});
+  shoeTile({super.key, required this.Shoe, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +59,7 @@ class shoeTile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "\$" + Shoe.price,
+                      "\$" + Shoe.price.toStringAsFixed(2),
                       style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -65,19 +69,21 @@ class shoeTile extends StatelessWidget {
                   SizedBox(height: 10),
                 ],
               ),
-              Container(
-                width: 65,
-                height: 70,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+              GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  width: 65,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
                   ),
-                ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.add, color: Colors.white),
+                  child: Icon(
+                   Icons.add, color: Colors.white,
+                  ),
                 ),
               ),
             ],
