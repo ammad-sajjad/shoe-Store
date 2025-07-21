@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shoe_store/components/navBar.dart';
 import 'package:shoe_store/pages/cartPage.dart';
 import 'package:shoe_store/pages/shopPage.dart';
+import 'package:shoe_store/pages/loginPage.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -89,11 +90,11 @@ class _homeState extends State<home> {
             // Bottom "Sign Out" button
             ListTile(
               leading: Icon(Icons.logout, color: Colors.white),
-              title: Text("Sign out", style: TextStyle(color: Colors.white)),
+              title: Text("Sign In", style: TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => home()),
+                  MaterialPageRoute(builder: (context) => loginPage()),
                 );
               },
             ),
