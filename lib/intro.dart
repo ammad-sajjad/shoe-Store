@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_store/home.dart';
+import 'package:shoe_store/pages/loginPage.dart';
 import 'package:shoe_store/pages/shopPage.dart';
 
 class introPage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _introPageState extends State<introPage> {
               onTap:
                   () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => home()),
+                    MaterialPageRoute(builder: (context) => loginPage()),
                   ),
               child: Container(
                 padding: EdgeInsets.all(10),

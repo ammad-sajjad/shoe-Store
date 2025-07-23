@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shoe_store/pages/signupPage.dart';
 
 import '../home.dart';
+import '../services/auth_service.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -11,6 +13,47 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
+  @override
+  final emailcontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
+  String errorMessage = '';
+
+  @override
+  void dispose() {
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void login() async {
+    try {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        },
+      );
+      await authService.value.login(
+        email: emailcontroller.text,
+        password: passwordcontroller.text,
+      );
+
+      Navigator.of(context).pop();
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => home()),
+      );
+
+
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message ?? 'Registration failed';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +89,7 @@ class _loginPageState extends State<loginPage> {
               SizedBox(
                 width: 300,
                 child: TextField(
+                  controller: emailcontroller,
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Colors.grey,
                   decoration: InputDecoration(
@@ -60,12 +104,12 @@ class _loginPageState extends State<loginPage> {
 
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.white)
+                      borderSide: BorderSide(color: Colors.white),
                     ),
 
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.white)
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
                 ),
@@ -76,6 +120,7 @@ class _loginPageState extends State<loginPage> {
               SizedBox(
                 width: 300,
                 child: TextField(
+                  controller: passwordcontroller,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   cursorColor: Colors.grey,
@@ -90,45 +135,49 @@ class _loginPageState extends State<loginPage> {
                     hintStyle: TextStyle(color: Colors.grey.shade600),
 
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.white)
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
 
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.white)
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
                 ),
               ),
+
+              Text(errorMessage, style: TextStyle(color: Colors.red)),
 
               SizedBox(height: 10),
 
               GestureDetector(
                 onTap:
                     () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => home()),
-                ),
+                      context,
+                      MaterialPageRoute(builder: (context) => home()),
+                    ),
                 child: SizedBox(
                   width: 300,
-                 child:Row(
-                   mainAxisAlignment: MainAxisAlignment.end,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text("Forgot Password?",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),)
+                      Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
                     ],
-                    ),
                   ),
+                ),
               ),
 
               SizedBox(height: 18),
 
               GestureDetector(
-                onTap:
-                    () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => home()),
-                ),
+                onTap: login,
                 child: Container(
                   padding: EdgeInsets.all(10),
                   width: 200,
@@ -145,14 +194,14 @@ class _loginPageState extends State<loginPage> {
                 ),
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
 
               GestureDetector(
                 onTap:
                     () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => signupPage()),
-                ),
+                      context,
+                      MaterialPageRoute(builder: (context) => signupPage()),
+                    ),
                 child: Container(
                   padding: EdgeInsets.all(10),
                   width: 200,

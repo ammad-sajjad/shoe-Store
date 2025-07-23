@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shoe_store/components/navBar.dart';
 import 'package:shoe_store/pages/cartPage.dart';
 import 'package:shoe_store/pages/shopPage.dart';
 import 'package:shoe_store/pages/loginPage.dart';
+import 'package:shoe_store/services/auth_service.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -11,9 +13,7 @@ class home extends StatefulWidget {
   State<home> createState() => _homeState();
 }
 class _homeState extends State<home> {
-
   int _selectedIndex = 0;
-
 
   void navigateBottomBar(int index) {
     setState(() {
@@ -25,6 +25,33 @@ class _homeState extends State<home> {
     const shop(),
     const cart()
   ];
+
+  String errorMessage = '';
+
+  void logout() async {
+    try {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Center(child: CircularProgressIndicator());
+        },
+      );
+      await authService.value.signout();
+
+      Navigator.of(context).pop();
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => loginPage()),
+      );
+
+
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message ?? 'Registration failed';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,13 +117,8 @@ class _homeState extends State<home> {
             // Bottom "Sign Out" button
             ListTile(
               leading: Icon(Icons.logout, color: Colors.white),
-              title: Text("Sign In", style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => loginPage()),
-                );
-              },
+              title: Text("Sign out", style: TextStyle(color: Colors.white)),
+              onTap: logout,
             ),
           ],
         ),
