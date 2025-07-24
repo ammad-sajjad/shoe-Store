@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shoe_store/home.dart';
 import 'package:shoe_store/intro.dart';
 import '';
 import 'package:shoe_store/services/auth_service.dart';
@@ -26,7 +27,7 @@ class _authStateChangeState extends State<authStateChange> {
           stream: authService.AuthStateChanges,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return shop();
+              return home();
             } else {
               return introPage();
             }

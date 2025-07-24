@@ -6,6 +6,7 @@ import 'package:shoe_store/intro.dart';
 import 'package:shoe_store/models/shoe.dart';
 import 'package:shoe_store/models/cart.dart';
 
+import '../home.dart';
 import 'cartPage.dart';
 
 class shop extends StatefulWidget {
@@ -21,46 +22,54 @@ class _shopState extends State<shop> {
 
     showDialog(
       context: context,
-      builder: (context) => Dialog(backgroundColor: Colors.grey[100],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.check_circle_outline, color: Colors.green, size: 48),
-              SizedBox(height: 16),
-              Text(
-                "Added to cart!",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                "Your item has been successfully added.",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-              SizedBox(height: 24),
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text("OK"),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white, padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+      builder:
+          (context) => Dialog(
+            backgroundColor: Colors.grey[100],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.check_circle_outline,
+                    color: Colors.green,
+                    size: 48,
                   ),
-                ),
-              )
-            ],
+                  SizedBox(height: 16),
+                  Text(
+                    "Added to cart!",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Your item has been successfully added.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
+                  SizedBox(height: 24),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("OK"),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 12,
+                      ),
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
     );
-
   }
 
   @override
@@ -68,7 +77,11 @@ class _shopState extends State<shop> {
     return Consumer<Cart>(
       builder:
           (context, value, child) => Scaffold(
+
             backgroundColor: Colors.grey[300],
+            // appBar: AppBar(
+            //   leading: home(),
+            // ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
