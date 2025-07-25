@@ -20,7 +20,7 @@ class AuthService {
     );
   }
 
-  Future<UserCredential> signin({
+  Future<UserCredential> signup({
     required String email,
     required String password,
   }) async {

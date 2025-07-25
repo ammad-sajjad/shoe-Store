@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shoe_store/services/auth_service.dart';
@@ -14,61 +15,72 @@ class signupPage extends StatefulWidget {
 
 class _signupPageState extends State<signupPage> {
   @override
-  final usernameController = TextEditingController();
-  final emailcontroller = TextEditingController();
-  final passwordcontroller = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _emailcontroller = TextEditingController();
+  final _passwordcontroller = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   String errorMessage = '';
 
   @override
   void dispose() {
-    emailcontroller.dispose();
-    passwordcontroller.dispose();
-    confirmPasswordController.dispose();
-    usernameController.dispose();
+    _emailcontroller.dispose();
+    _passwordcontroller.dispose();
+    _confirmPasswordController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
   @override
   void register() async {
-    if (passwordcontroller.text != confirmPasswordController.text) {
+    if (_passwordcontroller.text.trim() != _confirmPasswordController.text.trim()) {
       setState(() {
         errorMessage = 'Passwords do not match';
       });
       return;
     }
-    try {
 
+    Future addUserDetail(String username, String email, String password) async {
+      await FirebaseFirestore.instance.collection('shoes').add({
+        'username': username,
+        'email': email,
+        'password': password,
+      });
+    }
+
+    await addUserDetail(
+      _usernameController.text.trim(),
+      _emailcontroller.text.trim(),
+      _passwordcontroller.text.trim(),
+    );
+
+    try {
       showDialog(
         context: context,
         builder: (context) {
           return Center(child: CircularProgressIndicator());
         },
       );
-
-      await authService.value.signin(
-        email: emailcontroller.text,
-        password: passwordcontroller.text,
+      await authService.value.signup(
+        email: _emailcontroller.text.trim(),
+        password: _passwordcontroller.text.trim(),
       );
 
-      Navigator.of(context).pop();
-      // Set display name (username)
-      await FirebaseAuth.instance.currentUser!.updateDisplayName(
-        usernameController.text,
-      );
 
+      Navigator.pop(context);
       // Update the user display name
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => home()),
       );
     } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
       setState(() {
         errorMessage = e.message ?? 'Registration failed';
       });
     }
   }
+
 
 
   @override
@@ -106,7 +118,7 @@ class _signupPageState extends State<signupPage> {
               SizedBox(
                 width: 300,
                 child: TextField(
-                  controller: usernameController,
+                  controller: _usernameController,
                   keyboardType: TextInputType.name,
                   cursorColor: Colors.grey,
                   decoration: InputDecoration(
@@ -137,7 +149,7 @@ class _signupPageState extends State<signupPage> {
               SizedBox(
                 width: 300,
                 child: TextField(
-                  controller: emailcontroller,
+                  controller: _emailcontroller,
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Colors.grey,
                   decoration: InputDecoration(
@@ -168,7 +180,7 @@ class _signupPageState extends State<signupPage> {
               SizedBox(
                 width: 300,
                 child: TextField(
-                  controller: passwordcontroller,
+                  controller: _passwordcontroller,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   cursorColor: Colors.grey,
@@ -200,7 +212,7 @@ class _signupPageState extends State<signupPage> {
               SizedBox(
                 width: 300,
                 child: TextField(
-                  controller: confirmPasswordController,
+                  controller: _confirmPasswordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   cursorColor: Colors.grey,

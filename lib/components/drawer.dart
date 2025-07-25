@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shoe_store/pages/about.dart';
 
 import '../home.dart';
 import '../pages/loginPage.dart';
@@ -79,7 +80,7 @@ class _drawerState extends State<drawer> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => home()),
+                      MaterialPageRoute(builder: (context) => about()),
                     );
                   },
                 ),
