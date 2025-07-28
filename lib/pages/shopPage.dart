@@ -174,6 +174,71 @@ class _shopState extends State<shop> {
                     ),
                     child: Divider(color: Colors.white),
                   ),
+
+
+
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "New Arrival",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => introPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "See all",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 370,
+                    child: ListView.builder(
+                      itemCount: 4,
+                      scrollDirection: Axis.vertical,
+                      padding: EdgeInsets.only(top: 25, bottom: 35),
+                      // width: 320,
+                      itemBuilder: (context, index) {
+                        shoe Shoe = value.getShoeList()[index];
+
+                        return shoeTile(
+                          onTap: () => addShoeToCart(Shoe),
+                          Shoe: Shoe,
+                        );
+                      },
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 25.0,
+                      top: 23,
+                      right: 25,
+                    ),
+                    child: Divider(color: Colors.white),
+                  ),
+
                 ],
               ),
             ),

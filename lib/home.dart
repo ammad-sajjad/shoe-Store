@@ -33,7 +33,7 @@ class _homeState extends State<home> {
       bottomNavigationBar: navBar(onTabChange: (index)=>navigateBottomBar(index)),
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.transparent,
         leading: Builder(
           builder: (context) {
             return IconButton(
